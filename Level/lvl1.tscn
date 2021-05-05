@@ -1,0 +1,24 @@
+[gd_scene format=2]
+
+[node name="lvl1" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0 )
+
+[node name="Ground" type="CSGBox" parent="."]
+use_collision = true
+width = 5.0
+height = 0.1
+depth = 5.0
+
+[node name="Slide" type="CSGBox" parent="."]
+transform = Transform( 0.642788, -0.766044, 0, 0.766044, 0.642788, 0, 0, 0, 1, -4, 1, 0 )
+use_collision = true
+width = 1.0
+height = 5.0
+depth = 3.0
+
+[node name="Ground2" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 3, 0 )
+use_collision = true
+width = 5.0
+height = 0.1
+depth = 5.0
