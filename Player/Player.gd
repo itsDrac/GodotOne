@@ -13,7 +13,6 @@ export(float, 0, 90) var max_pitch := 30.0
 
 var velocity :Vector3
 var y_velocity :float
-var snap = get_floor_normal()
 
 onready var camera_root = $CameraRoot
 onready var camera = $CameraRoot/Camera
@@ -56,19 +55,22 @@ func handle_movement(delta):
 
 	acceleration = acceleration if is_on_floor() else air_acceleration
 	velocity = velocity.linear_interpolate(direction*speed, acceleration*delta)
+
+	var floor_normal = get_floor_normal()
 	
 	if is_on_floor():
-		pass
-		#y_velocity -= .01
+		if direction.length_squared() < 0.1:
+			y_velocity = -floor_normal.y * 0.4
+		
 	else:
 		y_velocity = clamp(y_velocity - gravity, 
 							-max_terminal_velocity, max_terminal_velocity) 
 	
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		y_velocity = jump_power
-		snap = Vector3.ZERO
+		floor_normal = Vector3.ZERO
 		
 	velocity.y = y_velocity
-	velocity = move_and_slide_with_snap(velocity, snap, Vector3.UP, true, 4, deg2rad(90))
+	velocity.y = move_and_slide_with_snap(velocity, floor_normal, Vector3.UP, true, 4, deg2rad(50)).y
 
 
