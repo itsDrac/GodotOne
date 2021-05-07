@@ -5,12 +5,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0 )
 
 [node name="Ground" type="CSGBox" parent="."]
 use_collision = true
-width = 10.0
+width = 20.0
 height = 0.1
-depth = 5.0
+depth = 20.0
 
 [node name="Slide" type="CSGBox" parent="."]
-transform = Transform( 0.668378, -0.743822, 0, 0.743822, 0.668378, 0, 0, 0, 1, -6.5, 1, 0 )
+transform = Transform( 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, -6.5, 1, 0 )
 use_collision = true
 width = 1.0
 height = 5.0
@@ -21,4 +21,4 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 3, 0 )
 use_collision = true
 width = 10.0
 height = 0.1
-depth = 5.0
+depth = 10.0

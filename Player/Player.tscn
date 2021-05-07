@@ -9,12 +9,17 @@ height = 1.5
 
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 2 )
+speed = 10.0
+animation_tree = NodePath("Dastan/AnimationTree")
 
 [node name="Dastan" parent="." instance=ExtResource( 1 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
 
+[node name="BoneAttachment" parent="Dastan/Armature/Skeleton" index="1"]
+transform = Transform( 0.668588, -0.732553, -0.127891, 0.582733, 0.40928, 0.702077, -0.461965, -0.543926, 0.700523, -0.470241, 0.780861, -0.18885 )
+
 [node name="CollisionCylinder" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.8, -0.1 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.6, -0.1 )
 shape = SubResource( 1 )
 
 [node name="CameraRoot" type="Spatial" parent="."]
@@ -22,3 +27,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.5, 0.2 )
 
 [node name="Camera" type="ClippedCamera" parent="CameraRoot"]
 transform = Transform( 1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0.5, 0, 1 )
+
+[editable path="Dastan"]
