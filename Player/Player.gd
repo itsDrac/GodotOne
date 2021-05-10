@@ -5,7 +5,7 @@ export var acceleration := 10.0
 export var air_acceleration := 5.0
 export var gravity := .98
 export var max_terminal_velocity := 54.0
-export var jump_power := 20.0
+export var jump_power := 20
 
 export(float, 0.1, 1) var mouse_sensitivity := .3
 export(float, -90, 0) var min_pitch := -50.0
@@ -39,25 +39,29 @@ func handle_camera(event) -> void:
 
 func handle_movement(delta):
 	var direction = Vector3.ZERO
+	var animation_direction = Vector2.ZERO
 
 	if Input.is_action_pressed("forward"):
 		direction -= transform.basis.z
-		
-		
+		animation_direction -= Vector2.UP
+	
+	
 	elif Input.is_action_pressed("backward"):
 		direction += transform.basis.z
+		animation_direction -= Vector2.DOWN
 
 	
 	if Input.is_action_pressed("left"):
 		direction -= transform.basis.x
+		animation_direction += Vector2.LEFT
 
 		
 	elif Input.is_action_pressed("right"):
 		direction += transform.basis.x
+		animation_direction += Vector2.RIGHT
 	
 	direction.normalized()
-	animation_tree.set("parameters/strafe/blend_position", -Vector2(direction.z, direction.x))
-	print(rotation_degrees.y)
+	animation_tree.set("parameters/strafe/blend_position", animation_direction)
 
 	acceleration = acceleration if is_on_floor() else air_acceleration
 	velocity = velocity.linear_interpolate(direction*speed, acceleration*delta)
@@ -67,6 +71,8 @@ func handle_movement(delta):
 	if is_on_floor():
 		if direction.length_squared() < 0.1:
 			y_velocity = -floor_normal.y * gravity
+		
+		#animation_tree.set("parameters/jump/active", false)
 	
 	else:
 		y_velocity = clamp(y_velocity - gravity, 
@@ -74,7 +80,8 @@ func handle_movement(delta):
 	
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		animation_tree.set("parameters/jump/active", true)
-		y_velocity = jump_power
+
+		y_velocity += jump_power  
 		floor_normal = Vector3.ZERO
 		
 	velocity.y = y_velocity

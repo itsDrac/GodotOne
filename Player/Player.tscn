@@ -15,8 +15,11 @@ animation_tree = NodePath("Dastan/AnimationTree")
 [node name="Dastan" parent="." instance=ExtResource( 1 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
 
+[node name="Skeleton" parent="Dastan/Armature" index="0"]
+bones/37/bound_children = [  ]
+
 [node name="BoneAttachment" parent="Dastan/Armature/Skeleton" index="1"]
-transform = Transform( 0.668588, -0.732553, -0.127891, 0.582733, 0.40928, 0.702077, -0.461965, -0.543926, 0.700523, -0.470241, 0.780861, -0.18885 )
+transform = Transform( 0.683616, -0.727322, 0.0606029, 0.388182, 0.432657, 0.813709, -0.618048, -0.53274, 0.578104, -0.491763, 0.738054, -0.158534 )
 
 [node name="CollisionCylinder" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.6, -0.1 )
