@@ -71,8 +71,7 @@ func handle_movement(delta):
 	if is_on_floor():
 		if direction.length_squared() < 0.1:
 			y_velocity = -floor_normal.y * gravity
-		
-		#animation_tree.set("parameters/jump/active", false)
+		gravity = 0.98
 	
 	else:
 		y_velocity = clamp(y_velocity - gravity, 
@@ -81,10 +80,18 @@ func handle_movement(delta):
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		animation_tree.set("parameters/jump/active", true)
 
+		hang_air(delta)
 		y_velocity += jump_power  
 		floor_normal = Vector3.ZERO
 		
 	velocity.y = y_velocity
 	move_and_slide_with_snap(velocity, floor_normal, Vector3.UP, true, 4, deg2rad(50))
 
+func hang_air(delta):
+	while gravity > .1 + delta:
+		yield(get_tree(), "idle_frame")
+		gravity = lerp(gravity, .1, delta)
+
+	yield(get_tree().create_timer(2.0), "timeout")
+	gravity = 0.98
 
