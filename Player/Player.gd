@@ -3,7 +3,7 @@ extends KinematicBody
 export var speed := 5.0
 export var acceleration := 10.0
 export var air_acceleration := 5.0
-export var gravity := .98
+export var gravity := .96
 export var max_terminal_velocity := 54.0
 export var jump_power := 20
 
@@ -11,9 +11,11 @@ export(float, 0.1, 1) var mouse_sensitivity := .3
 export(float, -90, 0) var min_pitch := -50.0
 export(float, 0, 90) var max_pitch := 30.0
 export(NodePath) onready var animation_tree = get_node(animation_tree)
+export(NodePath) onready var attack_timer = get_node(attack_timer)
 
 var velocity :Vector3
 var y_velocity :float
+var current_attack := 0
 
 onready var camera_root = $CameraRoot
 onready var camera = $CameraRoot/Camera
@@ -71,7 +73,11 @@ func handle_movement(delta):
 	if is_on_floor():
 		if direction.length_squared() < 0.1:
 			y_velocity = -floor_normal.y * gravity
-		gravity = 0.98
+		gravity = .98
+		
+		if Input.is_action_just_pressed("attack") and animation_direction == Vector2.ZERO:
+			attack_timer.start()
+			animation_tree.set("parameters/attack/active", true)
 	
 	else:
 		y_velocity = clamp(y_velocity - gravity, 
@@ -91,7 +97,11 @@ func hang_air(delta):
 	while gravity > .1 + delta:
 		yield(get_tree(), "idle_frame")
 		gravity = lerp(gravity, .1, delta)
+		print(gravity) # Problem(Bug) here
 
-	yield(get_tree().create_timer(2.0), "timeout")
+	yield(get_tree().create_timer(2), "timeout")
 	gravity = 0.98
 
+
+func _on_AttackTimer_timeout():
+	animation_tree.set("parameters/attack_state/current", 1)

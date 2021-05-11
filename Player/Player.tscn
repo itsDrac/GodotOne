@@ -11,6 +11,7 @@ height = 1.5
 script = ExtResource( 2 )
 speed = 10.0
 animation_tree = NodePath("Dastan/AnimationTree")
+attack_timer = NodePath("AttackTimer")
 
 [node name="Dastan" parent="." instance=ExtResource( 1 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
@@ -19,7 +20,7 @@ transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0
 bones/37/bound_children = [  ]
 
 [node name="BoneAttachment" parent="Dastan/Armature/Skeleton" index="1"]
-transform = Transform( 0.683616, -0.727322, 0.0606029, 0.388182, 0.432657, 0.813709, -0.618048, -0.53274, 0.578104, -0.491763, 0.738054, -0.158534 )
+transform = Transform( 0.664539, -0.738033, -0.11703, 0.575062, 0.405088, 0.71078, -0.477171, -0.53964, 0.693611, -0.470553, 0.773668, -0.18384 )
 
 [node name="CollisionCylinder" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.6, -0.1 )
@@ -30,5 +31,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.5, 0.2 )
 
 [node name="Camera" type="ClippedCamera" parent="CameraRoot"]
 transform = Transform( 1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0.5, 0, 1 )
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
 
 [editable path="Dastan"]
