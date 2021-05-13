@@ -3,7 +3,7 @@ extends KinematicBody
 export var speed := 5.0
 export var acceleration := 10.0
 export var air_acceleration := 5.0
-export var gravity := .96
+export var gravity := .98
 export var max_terminal_velocity := 54.0
 export var jump_power := 20
 
@@ -96,10 +96,11 @@ func handle_movement(delta):
 func hang_air(delta):
 	while gravity > .1 + delta:
 		yield(get_tree(), "idle_frame")
-		gravity = lerp(gravity, .1, delta)
+		gravity = lerp(gravity, .1, 
+		delta*2)
 		print(gravity) # Problem(Bug) here
 
-	yield(get_tree().create_timer(2), "timeout")
+	yield(get_tree().create_timer(2.3), "timeout")
 	gravity = 0.98
 
 

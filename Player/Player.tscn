@@ -16,11 +16,8 @@ attack_timer = NodePath("AttackTimer")
 [node name="Dastan" parent="." instance=ExtResource( 1 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
 
-[node name="Skeleton" parent="Dastan/Armature" index="0"]
-bones/37/bound_children = [  ]
-
 [node name="BoneAttachment" parent="Dastan/Armature/Skeleton" index="1"]
-transform = Transform( 0.664539, -0.738033, -0.11703, 0.575062, 0.405088, 0.71078, -0.477171, -0.53964, 0.693611, -0.470553, 0.773668, -0.18384 )
+transform = Transform( 0.701555, -0.711049, 0.0472264, 0.405321, 0.452661, 0.794237, -0.586119, -0.538059, 0.605769, -0.491377, 0.789448, -0.191914 )
 
 [node name="CollisionCylinder" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.6, -0.1 )
