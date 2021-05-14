@@ -5,7 +5,7 @@ export var acceleration := 10.0
 export var air_acceleration := 5.0
 export var gravity := .98
 export var max_terminal_velocity := 54.0
-export var jump_power := 20
+export var jump_power := 10
 
 export(float, 0.1, 1) var mouse_sensitivity := .3
 export(float, -90, 0) var min_pitch := -50.0
@@ -15,7 +15,7 @@ export(NodePath) onready var attack_timer = get_node(attack_timer)
 
 var velocity :Vector3
 var y_velocity :float
-var current_attack := 0
+
 
 onready var camera_root = $CameraRoot
 onready var camera = $CameraRoot/Camera
@@ -41,26 +41,25 @@ func handle_camera(event) -> void:
 
 func handle_movement(delta):
 	var direction = Vector3.ZERO
-	var animation_direction = Vector2.ZERO
+	var animation_direction = Vector2(
+		Input.get_action_strength("right") - Input.get_action_strength("left"),
+		Input.get_action_strength("forward") - Input.get_action_strength("backward")
+	)
 
 	if Input.is_action_pressed("forward"):
 		direction -= transform.basis.z
-		animation_direction -= Vector2.UP
 	
 	
 	elif Input.is_action_pressed("backward"):
 		direction += transform.basis.z
-		animation_direction -= Vector2.DOWN
 
 	
 	if Input.is_action_pressed("left"):
 		direction -= transform.basis.x
-		animation_direction += Vector2.LEFT
 
 		
 	elif Input.is_action_pressed("right"):
 		direction += transform.basis.x
-		animation_direction += Vector2.RIGHT
 	
 	direction.normalized()
 	animation_tree.set("parameters/strafe/blend_position", animation_direction)
@@ -97,7 +96,7 @@ func hang_air(delta):
 	while gravity > .1 + delta:
 		yield(get_tree(), "idle_frame")
 		gravity = lerp(gravity, .1, 
-		delta*2)
+		delta*4)
 		print(gravity) # Problem(Bug) here
 
 	yield(get_tree().create_timer(2.3), "timeout")
